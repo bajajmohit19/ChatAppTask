@@ -3,8 +3,12 @@ const mongodb = require('mongodb')
 const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectID
 
-const URI_TO_CONNECT_MONGODB = "mongodb+srv://root:root123@anijitsmongo-mwm6l.mongodb.net/allapps";
-const DB_NAME = "allapps"
+// const URI_TO_CONNECT_MONGODB = "mongodb+srv://root:root123@anijitsmongo-mwm6l.mongodb.net/allapps";
+const DB_NAME = "ChatApp"
+
+const URI_TO_CONNECT_MONGODB = `mongodb://localhost:27017/${DB_NAME}`;
+// const DB_NAME = "allapps"
+
 const COLLECTION_USERS = "users"
 const COLLECTION_ROOMS = "rooms"
 
@@ -52,18 +56,19 @@ let chooseApiAndSendResponse = (apiName, db, req, res, client, output) => {
 let makeLogin = async (db, req, res, client, output) => {
 	try {
 		let { username, password } = req.body
-
+		console.log(req.body)
 		let docs = await db
 			.collection(COLLECTION_USERS)
 			.find({ username, password }, { projection: { "password": 0 } })
 			.toArray()
-
+		console.log(docs)
 		// rename necessary fields
 		docs.map((doc) => {
 			doc.userId = doc._id
 			doc.name = doc.fullName.substring(0, doc.fullName.indexOf(' '))
 			delete doc._id
 			delete doc.fullName
+			console.log(doc)
 		})
 
 		// if the user exists or sends FAILED message
