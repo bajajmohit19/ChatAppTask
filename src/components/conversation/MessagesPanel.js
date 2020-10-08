@@ -11,10 +11,7 @@ import Loading from '../Loading'
 import Constants from '../Constants'
 
 class MessagesPanel extends Component {
-  // static propTypes = {
-  //   className: PropTypes.string,
-  // };
-
+  
   constructor(props) {
     super(props);
 
